@@ -15,7 +15,7 @@ Management-System-for-Car-and-Motorcycle-Services-Backend/
 │   ├── models/
 │   │   └── user.model.js
 │   ├── routes/
-│   │   └── user.routes.js
+│   │   └── app.routes.js
 │   ├── middlewares/
 │   │   └── error.middleware.js
 │   ├── utils/
