@@ -5,7 +5,7 @@ const ApiError = require("../utils/apiError");
 
 class AuthService {
   async login({ username, password }) {
-    const user = await UserRepository.findByEmail(username);
+    const user = await UserRepository.findByUsername(username);
     if (!user) throw new ApiError(401, "Invalid username or password");
 
     if (user.is_delete === 1) throw new ApiError(403, "Invalid username or password");
