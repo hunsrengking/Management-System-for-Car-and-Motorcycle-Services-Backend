@@ -1,6 +1,11 @@
+require('dotenv').config(); // Load .env
 const app = require('./app');
-const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-  console.log(`Server running http://localhost:${PORT}`);
+
+// Read host & port from env
+const HOST = process.env.SERVER_HOST || '0.0.0.0';
+const PORT = process.env.SERVER_PORT || 3000;
+
+app.listen(PORT, HOST, () => {
+  console.log(`✅ Server running at http://${HOST}:${PORT}`);
 });

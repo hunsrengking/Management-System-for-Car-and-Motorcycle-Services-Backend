@@ -4,16 +4,16 @@ const app = express();
 const pool = require('./src/config/db'); 
 // Import application routes
 const appRoutes = require('./src/routes/app.routes'); 
+const cors = require('cors');
 // Middleware
 app.use(express.json());
-
+app.use(cors());
 // Basic route
 app.get('/', (req, res) => {
   res.json({ message: 'Welcome to our backend service!' });
 });
 
 // Import routes
-
 app.use('/api', appRoutes);
 
 // Test DB connection route

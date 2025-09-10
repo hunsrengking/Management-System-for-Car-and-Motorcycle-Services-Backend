@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
-const UserRepository = require("../repositories/user.repository");
-const ApiError = require("../utils/apiError");
+const UserRepository = require("../../repositories/users/user.repository");
+const ApiError = require("../../utils/apiError");
 
 class UserService {
   async createUser({ username, email, password, role }) {

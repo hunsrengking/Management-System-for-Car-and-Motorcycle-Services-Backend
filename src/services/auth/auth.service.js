@@ -1,15 +1,15 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const UserRepository = require("../repositories/user.repository");
-const ApiError = require("../utils/apiError");
+const UserRepository = require("../../repositories/users/user.repository");
+const AuthException = require("../../Exceptions/users/auth.exception");
 
 class AuthService {
   async login({ username, password }) {
     const user = await UserRepository.findByUsername(username);
-    if (!user) throw new ApiError(401, "Invalid username or password");
+    if (!user) throw new AuthException("error.msg.Invalid username or password");
 
-    if (user.is_delete === 1) throw new ApiError(403, "Invalid username or password");
-    if (user.is_lock === 1) throw new ApiError(403, "Account is locked due to multiple failed logins, please contact support");
+    if (user.is_delete === 1) throw new AuthException("error.msg.Invalid username or password");
+    if (user.is_lock === 1) throw new AuthException("error.msg.Account is locked due to multiple failed logins, please contact to support center");
 
     const isMatch = await bcrypt.compare(password, user.password);
 
@@ -19,10 +19,10 @@ class AuthService {
       // If failed_attempts >= 3 → lock account
       if ((user.failed_attempts + 1) >= 3) {
         await UserRepository.lockUser(user.id);
-        throw new ApiError(403, "Account locked after 3 failed login attempts");
+        throw new AuthException("error.msg.Account locked after 3 failed login attempts");
       }
 
-      throw new ApiError(401, "Invalid email or password");
+      throw new AuthException("error.msg.Invalid email or password");
     }
 
     // Reset failed attempts after successful login
